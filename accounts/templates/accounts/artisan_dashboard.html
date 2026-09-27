@@ -1,0 +1,48 @@
+<!-- accounts/templates/accounts/artisan_dashboard.html -->
+
+{% extends 'accounts/base.html' %}
+
+{% block title %}Artisan Dashboard - My Project{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Demands for Your Services</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th>Demand Time</th>
+                <th>Requested Date</th>
+                <th>Requested Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for demand in demands %}
+            <tr>
+                <td>{{ demand.client.username }}</td>
+                <td>{{ demand.service.title }}</td>
+                <td>{{ demand.status }}</td>
+                <td>{{ demand.timestamp|date:"d/m/Y" }}</td>
+                <td>{{ demand.requested_date|date:"d/m/Y" }}</td>
+                <td>{{ demand.start_time }} - {{ demand.end_time }}</td>
+                <td>
+                    {% if demand.status == 'pending' %}
+                    <a href="{% url 'accept_demand' demand.id %}" class="btn btn-success btn-sm">Accept</a>
+                    <a href="{% url 'refuse_demand' demand.id %}" class="btn btn-danger btn-sm">Refuse</a>
+                    {% else %}
+                    Actions not available
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No demands found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

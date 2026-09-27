@@ -1,0 +1,22 @@
+<!-- accounts/templates/accounts/delete_service.html -->
+
+{% extends 'accounts/base.html' %}
+
+{% block title %}Delete Service - My Project{% endblock %}
+
+{% block content %}
+<h1>Delete Service</h1>
+<p>Are you sure you want to delete "{{ service.title }}"?</p>
+<div class="form-group">
+    {% if service.image %}
+    <img src="{{ service.image.url }}" class="rounded-circle" width="100" height="100" alt="{{ service.title }}">
+    {% else %}
+    No Image
+    {% endif %}
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'artisan_dashboard' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

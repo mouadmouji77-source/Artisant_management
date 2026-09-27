@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Project{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #fff;
+            /* Couleur de fond de la navbar */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Ombre légère */
+            transition: background-color 0.3s ease;
+            /* Transition fluide */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #007bff;
+            /* Couleur du texte */
+        }
+
+        .navbar-nav .nav-item .nav-link {
+            color: #333;
+            /* Couleur du texte des liens */
+            transition: color 0.3s ease;
+            /* Transition fluide */
+            font-weight: bold;
+            /* Police en gras */
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #007bff;
+            /* Couleur du texte au survol */
+            text-decoration: none;
+            /* Supprime le soulignement */
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Custom styles */
+        .footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="{% static 'images/logo.png' %}" height="60px" alt="Home Services Logo">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+                {% if user.userprofile.type == 'client' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'client_services' %}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'demand_services' %}">Demand Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'service_status_list' %}">Service Status</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'update_profile' %}">Update Profile</a>
+                </li>
+                {% elif user.userprofile.type == 'artisan' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'publish_service' %}">Publish Service</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'artisan_services' %}">Edit Service</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'artisan_dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'update_profile' %}">Update Profile</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><B>
+                        <span class="nav-link text-primary">
+                            Bienvenue Mr : {{ user.first_name }}
+                        </span></B>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+        integrity="sha384-V6F7d/UFiz5dHvXHRbTPDxvGntDR6Qxg/7oguRBd4qW7pJDTW5fMgYh9YhZsKfoY"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Register - My Project{% endblock %}
+
+{% block content %}{% load static %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left part for image -->
+
+        <!-- Right part for registration form -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div class="card w-75">
+                <div class="card-header bg-primary text-white"><B>Register for your Home Services</B></div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ user_form.username.id_for_label }}">Username</label>
+                            {{ user_form.username }}
+                            {% if user_form.username.errors %}
+                            <small class="text-danger">{{ user_form.username.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.email.id_for_label }}">Email</label>
+                            {{ user_form.email }}
+                            {% if user_form.email.errors %}
+                            <small class="text-danger">{{ user_form.email.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.password1.id_for_label }}">Password</label>
+                            {{ user_form.password1 }}
+                            {% if user_form.password1.errors %}
+                            <small class="text-danger">{{ user_form.password1.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.password2.id_for_label }}">Confirm Password</label>
+                            {{ user_form.password2 }}
+                            {% if user_form.password2.errors %}
+                            <small class="text-danger">{{ user_form.password2.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.first_name.id_for_label }}">First Name</label>
+                            {{ user_form.first_name }}
+                            {% if user_form.first_name.errors %}
+                            <small class="text-danger">{{ user_form.first_name.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.last_name.id_for_label }}">Last Name</label>
+                            {{ user_form.last_name }}
+                            {% if user_form.last_name.errors %}
+                            <small class="text-danger">{{ user_form.last_name.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.user_type.id_for_label }}">Type</label>
+                            {{ user_form.user_type }}
+                            {% if user_form.user_type.errors %}
+                            <small class="text-danger">{{ user_form.user_type.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.address.id_for_label }}">Address</label>
+                            {{ user_form.address }}
+                            {% if user_form.address.errors %}
+                            <small class="text-danger">{{ user_form.address.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <img src="{% static 'images/slider-img.png' %}" class="img-fluid" alt="Professional Image">
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .card {
+        margin-top: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        border-radius: 8px 8px 0 0;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Style des labels et des inputs */
+    label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style des messages d'erreur */
+    .text-danger {
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Service Status - My Project{% endblock %}
+
+{% block content %}
+<h1>Service Status</h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Service Title</th>
+                        <th>Status</th>
+                        <th>Timestamp</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for demand in client_demands %}
+                    <tr>
+                        <td>{{ demand.service.title }}</td>
+                        <td>{{ demand.get_status_display }}</td>
+                        <td>{{ demand.timestamp }}</td>
+                        <td>
+                            {% if demand.status == 'accepted' %}
+                            <a href="{% url 'service_status_detail' demand.service.id %}" class="btn btn-primary">Give
+                                Rating & Comment</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No service demands found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

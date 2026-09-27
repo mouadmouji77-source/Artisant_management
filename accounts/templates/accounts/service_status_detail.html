@@ -1,0 +1,77 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Service Details - My Project{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Service Details</h2>
+    <p>{{ service.description }}</p>
+
+    <div class="reviews-container"
+        style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+        <h3>Reviews</h3>
+        {% for review in reviews %}
+        <div class="review-item" style="margin-bottom: 10px;">
+            <strong>{{ review.client.username }}</strong>
+            <span>{{ review.rating }} stars</span>
+            <p>{{ review.comment }}</p>
+        </div>
+        {% empty %}
+        <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+
+    <h3>Add a Review</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.comment.errors }}
+        {{ form.rating.errors }}
+
+        <div class="form-group">
+            {{ form.comment.label_tag }}<br>
+            {{ form.comment }}
+        </div>
+
+        <!-- Horizontal Radio Buttons -->
+        <div class="form-group">
+            <label class="form-check-inline">
+                <input class="form-check-input" type="radio" name="rating" id="rating1" value="1">
+                <span class="form-check-label">1 star</span>
+            </label>
+            <label class="form-check-inline">
+                <input class="form-check-input" type="radio" name="rating" id="rating2" value="2">
+                <span class="form-check-label">2 stars</span>
+            </label>
+            <label class="form-check-inline">
+                <input class="form-check-input" type="radio" name="rating" id="rating3" value="3">
+                <span class="form-check-label">3 stars</span>
+            </label>
+            <label class="form-check-inline">
+                <input class="form-check-input" type="radio" name="rating" id="rating4" value="4">
+                <span class="form-check-label">4 stars</span>
+            </label>
+            <label class="form-check-inline">
+                <input class="form-check-input" type="radio" name="rating" id="rating5" value="5">
+                <span class="form-check-label">5 stars</span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</div>
+
+<style>
+    .reviews-container {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .review-item {
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}

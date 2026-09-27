@@ -1,0 +1,144 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Demand Service - {{ service.title }}{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS styles omitted for brevity */
+    .container {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        /* Ajuste la hauteur minimale pour couvrir tout l'écran */
+        position: relative;
+        /* Position relative pour permettre le positionnement absolu du footer */
+    }
+
+    .container h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .service-description {
+        margin-bottom: 20px;
+    }
+
+    .contact-info {
+        margin-bottom: 10px;
+    }
+
+    .artisan-info {
+        margin-bottom: 10px;
+    }
+
+    .service-image {
+        margin-bottom: 20px;
+    }
+
+    .reviews-container {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .review {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .review strong {
+        font-weight: bold;
+    }
+
+    .review span {
+        margin-left: 10px;
+    }
+
+    .review p {
+        margin-top: 5px;
+    }
+
+    .service-form {
+        margin-top: 20px;
+    }
+
+    .service-form .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .service-form .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    /* Style pour le footer */
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: #f8f9fa;
+        border-top: 1px solid #ddd;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+    }
+</style>
+
+<div class="container">
+    <h2>Demand Service - {{ service.title }}</h2>
+
+    <div class="service-description">
+        <p>{{ service.description }}</p>
+    </div>
+
+    <div class="contact-info">
+        <p><strong>Contact:</strong> {{ service.contact_number }}</p>
+    </div>
+
+    <div class="artisan-info">
+        <p><strong>Artisan:</strong> {{ service.artisan.first_name }} {{ service.artisan.last_name }}</p>
+        <p><strong>Address:</strong> {{ service.artisan.userprofile.address }}</p>
+    </div>
+
+    {% if service.image %}
+    <div class="service-image">
+        <img src="{{ service.image.url }}" class="rounded" width="200" height="200" alt="{{ service.title }}">
+    </div>
+    {% else %}
+    <p>No Image Available</p>
+    {% endif %}
+
+    <h3>Reviews</h3>
+    <div class="reviews-container">
+        {% for review in reviews %}
+        <div class="review">
+            <strong>{{ review.client.username }}</strong>
+            <span>{{ review.rating }} stars</span>
+            <p>{{ review.comment }}</p>
+        </div>
+        {% empty %}
+        <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+
+    <form method="post" class="service-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Demand Service</button>
+    </form>
+</div>
+
+<div class="footer">
+    All rights reserved - Developed by BEZZAZ Abdelfattah and MOUJI Mouad
+</div>
+
+{% endblock %}
